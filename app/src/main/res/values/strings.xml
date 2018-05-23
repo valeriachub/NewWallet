@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NewWallet</string>
+    <string name="sign_in">Sign in</string>
+    <string name="create_wallet">Create wallet</string>
+    <string name="or">OR</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">Email</string>
+    <string name="register">Register</string>
+    <string name="_2_ether">2 Ether</string>
+    <string name="_2_ninja">2 Ninja</string>
+    <string name="address">Address</string>
+    <string name="value">Value</string>
+    <string name="send">Send</string>
+</resources>
