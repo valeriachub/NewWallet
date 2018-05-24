@@ -16,4 +16,5 @@
     <string name="value">Value</string>
     <string name="send">Send</string>
     <string name="fill_fields">Please fill the fields</string>
+    <string name="eth_balance">Eth Balance</string>
 </resources>

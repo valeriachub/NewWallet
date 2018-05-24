@@ -9,8 +9,9 @@ import valeria.app.newwallet.services.model.request.LoginRequest;
 import valeria.app.newwallet.services.model.request.RegisterRequest;
 import valeria.app.newwallet.services.model.response.LoginResponse;
 import valeria.app.newwallet.services.model.response.RegisterResponse;
+import valeria.app.newwallet.services.model.response.SendEthResponse;
 
-public class ApiClient implements ApiService {
+public class ApiClient {
 
     private static ApiClient client = null;
     private static ApiService api;
@@ -25,7 +26,7 @@ public class ApiClient implements ApiService {
     private static void initClient() {
         client = new ApiClient();
 
-        Retrofit retorfit  = new Retrofit.Builder()
+        Retrofit retorfit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -34,14 +35,32 @@ public class ApiClient implements ApiService {
         api = retorfit.create(ApiService.class);
     }
 
-    @Override
+
+
     public Observable<RegisterResponse> register(RegisterRequest request) {
         return api.register(request);
     }
 
-    @Override
     public Observable<LoginResponse> login(LoginRequest request) {
         return api.login(request);
+    }
+
+    public Observable<String> getEthBalance(String address) {
+        StringBuilder builder = new StringBuilder("ethereum/api.v.1.0/address-balance?");
+        builder.append("address=");
+        builder.append(address);
+
+        return api.getEthBalance(builder.toString());
+    }
+
+    public Observable<SendEthResponse> sendEth(String address, int amount) {
+        StringBuilder builder = new StringBuilder("ethereum/api.v.1.0/eth-send?");
+        builder.append("address=");
+        builder.append(address);
+        builder.append("&amount=");
+        builder.append(amount);
+
+        return api.sendEth(builder.toString());
     }
 
 
