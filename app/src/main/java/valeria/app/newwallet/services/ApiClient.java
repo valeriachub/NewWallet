@@ -1,5 +1,7 @@
 package valeria.app.newwallet.services;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -11,7 +13,7 @@ public class ApiClient implements ApiService {
     private static ApiClient client = null;
     private static ApiService api;
 
-    private static String BASE_URL = "http://91.234.37.244:8080/nynja";
+    private static String BASE_URL = "http://91.234.37.244:8080/nynja/";
 
     public static ApiClient getClient() {
         if (client == null) initClient();
@@ -19,9 +21,12 @@ public class ApiClient implements ApiService {
     }
 
     private static void initClient() {
+        client = new ApiClient();
+
         Retrofit retorfit  = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         api = retorfit.create(ApiService.class);

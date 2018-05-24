@@ -27,12 +27,14 @@ public class StartActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_login)
-    void onLoginClicked(){
-
+    void onLoginClicked() {
+        LoginActivity.start(this);
+        finish();
     }
 
     @OnClick(R.id.btn_create)
-    void OnCreateClicked(){
-
+    void OnCreateClicked() {
+        RegistrationActivity.start(this);
+        finish();
     }
 }
