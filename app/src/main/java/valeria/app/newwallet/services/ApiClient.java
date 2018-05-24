@@ -5,7 +5,9 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import valeria.app.newwallet.services.model.request.LoginRequest;
 import valeria.app.newwallet.services.model.request.RegisterRequest;
+import valeria.app.newwallet.services.model.response.LoginResponse;
 import valeria.app.newwallet.services.model.response.RegisterResponse;
 
 public class ApiClient implements ApiService {
@@ -35,6 +37,11 @@ public class ApiClient implements ApiService {
     @Override
     public Observable<RegisterResponse> register(RegisterRequest request) {
         return api.register(request);
+    }
+
+    @Override
+    public Observable<LoginResponse> login(LoginRequest request) {
+        return api.login(request);
     }
 
 
