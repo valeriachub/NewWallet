@@ -69,4 +69,14 @@ public class PreferencesManager {
     public String getUserEmail(){
         return preferences.getString(Const.PREF_EMAIL, "");
     }
+
+    public void setUserAuthToken(String token){
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Const.PREF_AUTH_TOKEN, token);
+        editor.apply();
+    }
+
+    public String getUserAuthToken(){
+        return preferences.getString(Const.PREF_AUTH_TOKEN, "");
+    }
 }

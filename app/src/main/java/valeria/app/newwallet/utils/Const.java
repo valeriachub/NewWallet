@@ -7,5 +7,7 @@ public interface Const {
     String PREF_FNAME = "user_fname";
     String PREF_LNAME = "user_lname";
     String PREF_EMAIL = "user_email";
+    String PREF_AUTH_TOKEN = "user_auth_token";
+
 
 }

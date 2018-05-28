@@ -3,6 +3,8 @@ package valeria.app.newwallet.services;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import io.reactivex.Observable;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import valeria.app.newwallet.services.model.request.LoginRequest;
@@ -41,7 +43,7 @@ public class ApiClient {
         return api.register(request);
     }
 
-    public Observable<LoginResponse> login(LoginRequest request) {
+    public Observable<retrofit2.Response<LoginResponse>> login(LoginRequest request) {
         return api.login(request);
     }
 
@@ -63,5 +65,32 @@ public class ApiClient {
         return api.sendEth(builder.toString());
     }
 
+    public Observable<SendEthResponse> sendEthPlain(String addressFrom, String addressTo, int amount) {
+        StringBuilder builder = new StringBuilder("ethereum/api.v.1.0/eth-send-plain?");
+        builder.append("from=");
+        builder.append(addressFrom);
+        builder.append("&to=");
+        builder.append(addressTo);
+        builder.append("&amount=");
+        builder.append(amount);
+
+        return api.sendEthPlain(builder.toString());
+    }
+
+    public Observable<String> getTokenBalance(String authorizationToken) {
+        StringBuilder builder = new StringBuilder("token/api.v.1.0/balance");
+
+        return api.getTokenBalance(builder.toString(), authorizationToken);
+    }
+
+    public Observable<SendEthResponse> sendToken(String authorizationToken, String addressTo, int amount) {
+        StringBuilder builder = new StringBuilder("token/api.v.1.0/transfer?");
+        builder.append("address=");
+        builder.append(addressTo);
+        builder.append("&amount=");
+        builder.append(amount);
+
+        return api.sendToken(builder.toString(), authorizationToken);
+    }
 
 }

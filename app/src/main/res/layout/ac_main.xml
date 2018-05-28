@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="userInfo"
             type="valeria.app.newwallet.ui.model.UserInformation" />
+
+        <variable
+            name="activity"
+            type="valeria.app.newwallet.ui.MainActivity" />
     </data>
 
     <LinearLayout
@@ -41,22 +48,42 @@
             android:text="@{userInfo.ethBalance}"
             tools:text="@string/eth_balance" />
 
+        <TextView
+            android:id="@+id/text_token_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{userInfo.tokenBalance}"
+            tools:text="@string/token_balance" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <TextView
+                android:id="@+id/text_ether"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:text="@string/_2_ether" />
+                android:background="@{userInfo.isEthSelected? @drawable/bg_selected : @drawable/bg_unselected}"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/ether"
+                tools:background="@drawable/bg_selected" />
 
-            <Button
+            <TextView
+                android:id="@+id/text_ninja"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:text="@string/_2_ninja" />
+                android:background="@{!userInfo.isEthSelected? @drawable/bg_selected : @drawable/bg_unselected}"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/ninja"
+                tools:background="@drawable/bg_unselected" />
         </LinearLayout>
 
         <EditText

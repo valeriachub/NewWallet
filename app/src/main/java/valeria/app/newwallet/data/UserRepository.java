@@ -59,4 +59,12 @@ public class UserRepository {
         return preferenceManager.getUserEmail();
     }
 
+    public void setUserAuthToken(String token){
+        preferenceManager.setUserAuthToken(token);
+    }
+
+    public String getUserAuthToken(){
+        return preferenceManager.getUserAuthToken();
+    }
+
 }

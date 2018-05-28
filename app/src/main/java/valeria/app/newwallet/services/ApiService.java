@@ -1,10 +1,12 @@
 package valeria.app.newwallet.services;
 
 
+import android.databinding.ObservableField;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Url;
 import valeria.app.newwallet.services.model.request.LoginRequest;
@@ -21,7 +23,7 @@ public interface ApiService {
     Observable<RegisterResponse> register(@Body RegisterRequest request);
 
     @POST("login")
-    Observable<LoginResponse> login(@Body LoginRequest request);
+    Observable<retrofit2.Response <LoginResponse>>login(@Body LoginRequest request);
 
 
 
@@ -33,5 +35,15 @@ public interface ApiService {
     @GET
     Observable<SendEthResponse> sendEth(@Url String url);
 
+    @GET
+    Observable<SendEthResponse> sendEthPlain(@Url String url);
+
+    //Token Controller
+
+    @GET
+    Observable<String> getTokenBalance(@Url String url, @Header("Authorization") String authorizationToken);
+
+    @GET
+    Observable<SendEthResponse> sendToken(@Url String url, @Header("Authorization") String authorizationToken);
 
 }

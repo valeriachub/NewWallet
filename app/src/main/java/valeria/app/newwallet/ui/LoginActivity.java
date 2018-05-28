@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,6 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
 import valeria.app.newwallet.R;
 import valeria.app.newwallet.data.UserRepository;
 import valeria.app.newwallet.services.ApiClient;
@@ -58,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.btn_login)
     void onLoginClicked() {
         Utils.hideKeyboard(usernameView, this);
-        if(!isReady()) return;
+        if (!isReady()) return;
         loginUser();
     }
 
@@ -74,40 +80,44 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void loginUser(){
+    private void loginUser() {
         LoginRequest request = new LoginRequest(
                 passwordView.getText().toString(),
                 usernameView.getText().toString());
 
-        if(progressDialog == null) progressDialog = new ProgressDialog(this);
+        if (progressDialog == null) progressDialog = new ProgressDialog(this);
 
         Disposable disposable = ApiClient.getClient().login(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> progressDialog.show())
-                .subscribe(loginResponse -> {
+                .subscribe(response -> {
                     progressDialog.dismiss();
-                    if(loginResponse!=null){
-                        saveUserInfo(loginResponse);
-                       showMainScreen();
+                    if(response!=null) {
+                        String header = response.headers().get("authorization");
+                        LoginResponse loginResponse = response.body();
+                        saveUserInfo(loginResponse, header);
+                        showMainScreen();
                     }
                 }, throwable -> {
                     progressDialog.dismiss();
                     throwable.printStackTrace();
                 });
 
+
         compositeDisposable.add(disposable);
     }
 
-    private void saveUserInfo(LoginResponse response){
+    private void saveUserInfo(LoginResponse response, String header) {
         UserRepository.getInstance(this).setUserAddress(response.getAddress());
         UserRepository.getInstance(this).setUserUsername(response.getUsername());
         UserRepository.getInstance(this).setUserFName(response.getFirstName());
         UserRepository.getInstance(this).setUserLName(response.getLastName());
         UserRepository.getInstance(this).setUserEmail(response.getEmail());
+        UserRepository.getInstance(this).setUserAuthToken(header);
     }
 
-    private void showMainScreen(){
+    private void showMainScreen() {
         MainActivity.start(this);
         finish();
     }

@@ -9,7 +9,10 @@ public class UserInformation {
     public String lastName;
     public String username;
     public String address;
+
+    public final ObservableField<Boolean> isEthSelected = new ObservableField<>(false);
     public final ObservableField<String> ethBalance = new ObservableField<>();
+    public final ObservableField<String> tokenBalance = new ObservableField<>();
 
     public UserInformation(String email, String firstName, String lastName, String username, String address) {
         this.email = email;

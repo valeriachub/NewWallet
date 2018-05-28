@@ -12,9 +12,12 @@
     <string name="register">Register</string>
     <string name="_2_ether">2 Ether</string>
     <string name="_2_ninja">2 Ninja</string>
+    <string name="ether">Ether</string>
+    <string name="ninja">Ninja</string>
     <string name="address">Address</string>
     <string name="value">Value</string>
     <string name="send">Send</string>
     <string name="fill_fields">Please fill the fields</string>
     <string name="eth_balance">Eth Balance</string>
+    <string name="token_balance">Token Balance</string>
 </resources>
